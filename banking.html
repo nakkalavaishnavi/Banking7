@@ -1,2 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SmartBank - Banking Application</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #0066cc;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #004080;
+      margin-bottom: 10px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, select, button {
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #004080;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #003366;
+    }
+    .notification {
+      background-color: #e6ffe6;
+      padding: 15px;
+      border-left: 5px solid #33cc33;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
 
-   
+<header>
+  <h1>SmartBank - Your Trusted Banking Partner</h1>
+</header>
+
+<nav>
+  <a href="#account">Manage Account</a>
+  <a href="#transactions">Transactions</a>
+  <a href="#interest">Interest Calculator</a>
+  <a href="#notifications">Notifications</a>
+  <a href="#undo">Undo Transaction</a>
+</nav>
+
+<div class="container">
+
+  <div class="section" id="account">
+    <h2>Account Management</h2>
+    <label for="accountType">Select Account Type:</label>
+    <select id="accountType">
+      <option value="savings">Savings Account</option>
+      <option value="fixed">Fixed Deposit</option>
+      <option value="current">Current Account</option>
+    </select>
+    <label for="accountName">Account Holder Name:</label>
+    <input type="text" id="accountName" placeholder="Enter your name">
+    <label for="accountBalance">Initial Balance:</label>
+    <input type="number" id="accountBalance" placeholder="Enter initial balance">
+    <button onclick="createAccount()">Create Account</button>
+  </div>
+
+  <div class="section" id="transactions">
+    <h2>Banking Transactions</h2>
+    <label for="transactionAmount">Amount:</label>
+    <input type="number" id="transactionAmount" placeholder="Enter amount">
+    <button onclick="deposit()">Deposit</button>
+    <button onclick="withdraw()">Withdraw</button>
+    <button onclick="transfer()">Transfer</button>
+  </div>
+
+  <div class="section" id="interest">
+    <h2>Interest Calculator</h2>
+    <label for="interestAmount">Enter Principal Amount:</label>
+    <input type="number" id="interestAmount" placeholder="Enter amount">
+    <label for="interestYears">Years:</label>
+    <input type="number" id="interestYears" placeholder="Enter duration in years">
+    <button onclick="calculateInterest()">Calculate Interest</button>
+  </div>
+
+  <div class="section" id="notifications">
+    <h2>Notifications</h2>
+    <div class="notification" id="notificationBox">
+      You will receive updates here about your transactions and balance changes.
+    </div>
+  </div>
+
+  <div class="section" id="undo">
+    <h2>Undo Last Transaction</h2>
+    <button onclick="undoTransaction()">Undo</button>
+  </div>
+
+</div>
+
+<script>
+  function createAccount() {
+    const name = document.getElementById('accountName').value;
+    const type = document.getElementById('accountType').value;
+    const balance = document.getElementById('accountBalance').value;
+    document.getElementById('notificationBox').innerText =
+      `Account created for ${name} (${type}) with ₹${balance} balance.`;
+  }
+
+  function deposit() {
+    const amount = document.getElementById('transactionAmount').value;
+    document.getElementById('notificationBox').innerText =
+      `₹${amount} deposited successfully. Balance updated.`;
+  }
+
+  function withdraw() {
+    const amount = document.getElementById('transactionAmount').value;
+    document.getElementById('notificationBox').innerText =
+      `₹${amount} withdrawn successfully. Balance updated.`;
+  }
+
+  function transfer() {
+    const amount = document.getElementById('transactionAmount').value;
+    document.getElementById('notificationBox').innerText =
+      `₹${amount} transferred successfully. Balance updated.`;
+  }
+
+  function calculateInterest() {
+    const principal = parseFloat(document.getElementById('interestAmount').value);
+    const years = parseFloat(document.getElementById('interestYears').value);
+    const type = document.getElementById('accountType').value;
+    let rate = 0;
+
+    if (type === 'savings') rate = 0.04;
+    else if (type === 'fixed') rate = 0.06;
+    else if (type === 'current') rate = 0.03;
+
+    const interest = principal * rate * years;
+    document.getElementById('notificationBox').innerText =
+      `Interest for ${type} account over ${years} years is ₹${interest.toFixed(2)}.`;
+  }
+
+  function undoTransaction() {
+    document.getElementById('notificationBox').innerText =
+      `Last transaction has been undone.`;
+  }
+</script>
+
+</body>
+</html>
